@@ -4,6 +4,7 @@ from pytubefix.cli import on_progress
 import os
 import ffmpeg
 
+#GUI using Tkinter
 class MyGUI:
 
     def __init__(self):
@@ -33,12 +34,12 @@ class MyGUI:
         self.label.pack(padx=20, pady=15)
         self.label.configure(fg='black', bg='green')
 
-
+#downloads video file
 def download_video(url, output_dir = "downloads"):
     yt = YouTube(url, on_progress_callback = on_progress)
     video_title = ''.join(ch for ch in yt.title if (ch.isalnum() or ch == ' '))
     video_stream = yt.streams.filter(adaptive=True, file_extension='mp4', only_video=True).order_by('resolution').desc().first()
-
+    
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
@@ -46,6 +47,7 @@ def download_video(url, output_dir = "downloads"):
 
     return video_title, video_path
 
+#downloads audio file
 def download_audio(url, output_dir = "downloads"):
     yt = YouTube(url)
     audio_stream = yt.streams.filter(adaptive=True, file_extension='mp4', only_audio=True).first()
@@ -57,6 +59,7 @@ def download_audio(url, output_dir = "downloads"):
 
     return audio_path
 
+#merges video and audio files using FFmpeg
 def merge_video_audio(video_title, video_path, audio_path, output_folder):
     input_video = ffmpeg.input(video_path)
     input_audio = ffmpeg.input(audio_path)
@@ -67,6 +70,7 @@ def merge_video_audio(video_title, video_path, audio_path, output_folder):
     os.remove(video_path)
     os.remove(audio_path)
 
+#puts everything together
 def get_max_quality_video(url, output_folder = r'C:\Users\Saksham Vats\Downloads'):
 
     video_title, video_path = download_video(url)
@@ -74,4 +78,5 @@ def get_max_quality_video(url, output_folder = r'C:\Users\Saksham Vats\Downloads
 
     merge_video_audio(video_title, video_path, audio_path, output_folder)
 
+#starts GUI
 MyGUI()
