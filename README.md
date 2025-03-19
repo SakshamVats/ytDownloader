@@ -13,7 +13,7 @@
 ---
 
 ## 📂 Project Structure  
-- `yt_downloader.py` → Main script with GUI and download logic.  
+- `ytDownloader.py` → Main script with GUI and download logic.  
 - `downloads/` → Default folder for downloaded videos.  
 - Uses **PyTube**, **FFmpeg**, and **Tkinter** for functionality.  
 
